@@ -134,4 +134,30 @@ public class DriverController {
         List<EligibleDriverResponse> eligible = driverService.findEligibleDrivers(serviceArea, latitude, longitude, radiusKm);
         return ResponseEntity.ok(eligible);
     }
+    
+    @DeleteMapping("/vehicles/{vehicleId}")
+    @Operation(summary = "Delete vehicle for driver", description = "Removes a registered vehicle belonging to the authenticated driver.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Vehicle deleted successfully"),
+            @ApiResponse(responseCode = "404", description = "Vehicle not found")
+    })
+    public ResponseEntity<Void> deleteVehicle(
+            @AuthenticationPrincipal AuthenticatedUser user,
+            @PathVariable String vehicleId) {
+        String driverId = resolveDriverId(user, "driver-default");
+        driverService.deleteVehicle(driverId, vehicleId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/profile")
+    @Operation(summary = "Delete driver profile", description = "Deletes operational profile and associated vehicles for the authenticated driver.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Driver profile deleted successfully"),
+            @ApiResponse(responseCode = "404", description = "Driver profile not found")
+    })
+    public ResponseEntity<Void> deleteProfile(@AuthenticationPrincipal AuthenticatedUser user) {
+        String driverId = resolveDriverId(user, "driver-default");
+        driverService.deleteDriverProfile(driverId);
+        return ResponseEntity.noContent().build();
+    }
 }
