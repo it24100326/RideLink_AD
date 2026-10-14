@@ -27,11 +27,7 @@ AD_project/
 ├── .github/
 │   └── workflows/
 │       └── ci.yml                          # GitHub Actions CI matrix build
-├── docs/
-│   ├── architecture.md                     # Architecture specification
-│   ├── architecture-diagram.md             # Mermaid architecture diagrams
-│   ├── sequence-diagram.md                 # End-to-end sequence flows
-│   └── communication-design.md             # REST communication matrix
+
 ├── postman/
 │   ├── RideLink.postman_collection.json    # Complete API test suite
 │   └── RideLink.postman_environment.json   # Environment variables
